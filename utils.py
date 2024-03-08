@@ -1,3 +1,5 @@
+from .checks.BaseCheck import BaseCheck
+
 DIGITS = tuple(range(10))
 CARRY = (0, 1)
 
@@ -30,7 +32,7 @@ def make_assertions(
     O: int | None = None,
     should_print: bool = True,
     only_on: bool | None = None
-) -> bool:
+) -> tuple[bool, list[BaseCheck]]:
     def printable(check: bool, /) -> bool:
         return should_print and (only_on is None or only_on == check)
 
@@ -38,7 +40,7 @@ def make_assertions(
         print('\n{\n\t' + '_'*20,
               f'\n\t{F=}, {x3=}, {x2=}, {x1=}, {U=}, {R=}, {W=}, {T=}, {O=}')
 
-    # TODO: Return a list of all the checks that failed
+    failed_checks: list[BaseCheck] = []
 
     all_true = True
 
@@ -112,7 +114,7 @@ def make_assertions(
 
     if should_print:
         print('\n\t' + '_'*20, f'\t{all_true= }', '}', sep='\n')
-    return all_true
+    return all_true, failed_checks
 
 
 '''
