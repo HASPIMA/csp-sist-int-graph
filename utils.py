@@ -53,7 +53,7 @@ def make_assertions(
 
     if printable(all_different):
         print(f'\t\t{all_different} ->',
-              f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', all_different)
+              f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', all_different())
 
     if O is not None and\
        R is not None and\
