@@ -1,7 +1,7 @@
 from .BaseCheck import BaseCheck
 
 
-class alldiff(BaseCheck):
+class alldifferent(BaseCheck):
     check = 'alldiff'
 
     def __init__(self, **kwargs):
