@@ -1,5 +1,5 @@
-from .checks import *
-from .checks.BaseCheck import BaseCheck
+from checks import *
+from checks.BaseCheck import BaseCheck
 
 DIGITS = tuple(range(10))
 CARRY = (0, 1)
