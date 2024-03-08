@@ -55,19 +55,21 @@ def make_assertions(
         print(f'\t\t{all_different} ->',
               f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', all_different())
 
+    # FIXME: Check for None properly
     if O is not None and\
        R is not None and\
-       x1 is not None and\
-       U is not None and\
-       W is not None:
+       x1 is not None:
         if should_print:
             print('\n\t\t' + '_'*20, '\n O + O = R')
 
-        o_remainder = (2*O % 10) == R
-        all_true = all_true and o_remainder
-        if printable(o_remainder):
-            print('\t\t(2*O % 10) == R ->',
-                  f'(2*{O} % 10) == {R} -> {2*O % 10} == {R}', o_remainder)
+        o_remainder_inst = o_remainder(O=O, R=R,)
+        all_true = all_true and o_remainder_inst()
+        if not o_remainder_inst():
+            failed_checks.append(o_remainder_inst)
+
+        if printable(o_remainder_inst):
+            print(f'\t\t{o_remainder_inst} ->',
+                  f'(2*{O} % 10) == {R} -> {2*O % 10} == {R}', o_remainder_inst())
 
         o_div = 2*O // 10 == x1
         all_true = all_true and o_div
