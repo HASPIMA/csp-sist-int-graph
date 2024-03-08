@@ -3,8 +3,9 @@ from .BaseCheck import BaseCheck
 
 class alldifferent(BaseCheck):
     check = 'alldiff'
+    this: dict[str, int]
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: int):
         self.this = kwargs
 
     def __call__(self,) -> bool:

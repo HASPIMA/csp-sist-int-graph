@@ -3,8 +3,10 @@ from .BaseCheck import BaseCheck
 
 class o_remainder(BaseCheck):
     check = '(2*O % 10) == R'
+    O: int
+    R: int
 
-    def __init__(self, *, O, R):
+    def __init__(self, *, O: int, R: int):
         self.O = O
         self.R = R
 
@@ -13,9 +15,11 @@ class o_remainder(BaseCheck):
 
 
 class o_div(BaseCheck):
-    check = '2*O // 10 == X1'
+    check = '2*O // 10 == x1'
+    O: int
+    x1: int
 
-    def __init__(self, *, O, x1):
+    def __init__(self, *, O: int, x1: int):
         self.O = O
         self.x1 = x1
 
