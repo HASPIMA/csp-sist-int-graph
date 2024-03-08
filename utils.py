@@ -55,7 +55,6 @@ def make_assertions(
         print(f'\t\t{all_different} ->',
               f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', all_different())
 
-    # FIXME: Check for None properly
     if O is not None and\
        R is not None and\
        x1 is not None:
@@ -78,42 +77,53 @@ def make_assertions(
                   f'(2*{O} // 10) == {x1} -> {2*O // 10} == {x1}', o_div)
 
     if W is not None and\
-            U is not None and\
-            x1 is not None and\
-            x2 is not None:
-        if should_print:
-            print('\n\t\t' + '_'*20, '\n W + W = U')
-        w_remainder = (2*W % 10) + x1 == U
-        all_true = all_true and w_remainder
-        if printable(w_remainder):
-            print('\t\t(2*W % 10) + x1 == U ->',
-                  f'(2*{W} % 10) + {x1} == {U} -> {(2*W % 10) + x1} == {U}', w_remainder)
+            x1 is not None:
 
-        w_div = (2*W + x1) // 10 == x2
-        all_true = all_true and w_div
-        if printable(w_div):
-            print('\t\t(2*W + x1) // 10 == x2 ->',
-                  f'(2*{W} + {x1}) // 10 == {x2} -> {(2*W + x1) // 10} == {x2}', w_div)
+        if U is not None:
+            if should_print:
+                print('\n\t\t' + '_'*20, '\n W + W = U')
+
+            w_remainder = (2*W % 10) + x1 == U
+            all_true = all_true and w_remainder
+
+            if printable(w_remainder):
+                print(
+                    '\t\t(2*W % 10) + x1 == U ->',
+                    f'(2*{W} % 10) + {x1} == {U} -> {(2*W % 10) + x1} == {U}',
+                    w_remainder,
+                )
+
+        if x2 is not None:
+            w_div = (2*W + x1) // 10 == x2
+            all_true = all_true and w_div
+            if printable(w_div):
+                print(
+                    '\t\t(2*W + x1) // 10 == x2 ->',
+                    f'(2*{W} + {x1}) // 10 == {x2} -> {(2*W + x1) // 10} == {x2}',
+                    w_div,
+                )
 
     if T is not None and\
-            O is not None and\
-            x2 is not None and\
-            x3 is not None:
+            x2 is not None:
         if should_print:
             print('\n\t\t' + '_'*20, '\n T + T = FO')
 
-        t_remainder = (2*T % 10) + x2 == O
-        all_true = all_true and t_remainder
-        if printable(t_remainder):
-            print('\t\t(2*T % 10) + x2 == O ->',
-                  f'(2*{T} % 10) + {x2} == {O} -> {(2*T % 10) + x2} == {O}', t_remainder)
+        if O is not None:
+            t_remainder = (2*T % 10) + x2 == O
+            all_true = all_true and t_remainder
+            if printable(t_remainder):
+                print('\t\t(2*T % 10) + x2 == O ->',
+                      f'(2*{T} % 10) + {x2} == {O} -> {(2*T % 10) + x2} == {O}', t_remainder)
 
-        t_div = (2*T + x2) // 10 == x3
-        all_true = all_true and t_div
-        if printable(t_div):
-            print('\t\t(2*T + x2) // 10 == x3 ->',
-                  f'(2*{T} + {x2}) // 10 == {x3} -> {(2*T + x2) // 10} == {x3}', (2*T + x2) // 10 == x3)
+        if x3 is not None:
+            t_div = (2*T + x2) // 10 == x3
+            all_true = all_true and t_div
+            if printable(t_div):
+                print('\t\t(2*T + x2) // 10 == x3 ->',
+                      f'(2*{T} + {x2}) // 10 == {x3} -> {(2*T + x2) // 10} == {x3}', (2*T + x2) // 10 == x3)
 
+    if x3 is not None and\
+            F is not None:
         carry_check = F == x3
         all_true = all_true and carry_check
         if printable(carry_check):
