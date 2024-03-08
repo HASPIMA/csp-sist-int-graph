@@ -1,3 +1,4 @@
+from .checks import *
 from .checks.BaseCheck import BaseCheck
 
 DIGITS = tuple(range(10))
@@ -44,11 +45,15 @@ def make_assertions(
 
     all_true = True
 
-    are_different = alldiff(F, U, R, W, T, O)
-    all_true = all_true and are_different
-    if printable(are_different):
-        print('\t\talldiff(F, U, R, W, T, O) ->',
-              f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', are_different)
+    all_different = alldifferent(F=F, U=U, R=R, W=W, T=T, O=O)
+    all_true = all_true and all_different()
+
+    if not all_different():
+        failed_checks.append(all_different)
+
+    if printable(all_different()):
+        print(f'\t\t{all_different} ->',
+              f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', all_different)
 
     if O is not None and\
        R is not None and\
