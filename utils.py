@@ -43,7 +43,7 @@ def make_assertions(
 
     failed_checks: list[BaseCheck] = []
 
-    all_true = True
+    all_true: bool = True
 
     all_different = alldifferent(F=F, U=U, R=R, W=W, T=T, O=O)
     all_true = all_true and all_different()
