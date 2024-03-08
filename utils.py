@@ -38,7 +38,15 @@ def make_assertions(
         print('\n{\n\t' + '_'*20,
               f'\n\t{F=}, {x3=}, {x2=}, {x1=}, {U=}, {R=}, {W=}, {T=}, {O=}')
 
+    # TODO: Return a list of all the checks that failed
+
     all_true = True
+
+    are_different = alldiff(F, U, R, W, T, O)
+    all_true = all_true and are_different
+    if printable(are_different):
+        print('\t\talldiff(F, U, R, W, T, O) ->',
+              f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', are_different)
 
     if O is not None and\
        R is not None and\
@@ -102,12 +110,13 @@ def make_assertions(
         if printable(carry_check):
             print('\t\tF == x3 ->', f'{F} == {x3}', F == x3)
 
-    are_different = alldiff(F, U, R, W, T, O)
-    all_true = all_true and are_different
-    if printable(are_different):
-        print('\t\talldiff(F, U, R, W, T, O) ->',
-              f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', are_different)
-
     if should_print:
         print('\n\t' + '_'*20, f'\t{all_true= }', '}', sep='\n')
     return all_true
+
+
+'''
+NOTE: We might want to make the branches to collapse the checks into
+the single most common case if any of the checks are False. This would
+aid in reducing the number of nodes in the generated tree.
+'''
