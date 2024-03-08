@@ -12,5 +12,5 @@ class alldiff(BaseCheck):
         return len(set(vals)) == len(vals)
 
     def __str__(self):
-        _, message = self.passes
+        _, message = self.passes()
         return f'{message} {self.check}({", ".join(self.this.keys())})'
