@@ -70,11 +70,18 @@ def make_assertions(
             print(f'\t\t{o_remainder_inst} ->',
                   f'(2*{O} % 10) == {R} -> {2*O % 10} == {R}', o_remainder_inst())
 
-        o_div = 2*O // 10 == x1
-        all_true = all_true and o_div
-        if printable(o_div):
-            print('\t\t2*O // 10 == X1 ->',
-                  f'(2*{O} // 10) == {x1} -> {2*O // 10} == {x1}', o_div)
+        o_div_inst = o_div(O=O, x1=x1)
+        all_true = all_true and o_div_inst()
+
+        if not o_div_inst():
+            failed_checks.append(o_div_inst)
+
+        if printable(o_div_inst):
+            print(
+                f'\t\t{o_div_inst} ->',
+                f'(2*{O} // 10) == {x1} -> {2*O // 10} == {x1}',
+                o_div_inst(),
+            )
 
     if W is not None and\
             x1 is not None:
