@@ -34,8 +34,8 @@ def make_assertions(
     should_print: bool = True,
     only_on: bool | None = None
 ) -> tuple[bool, list[BaseCheck]]:
-    def printable(check: bool, /) -> bool:
-        return should_print and (only_on is None or only_on == check)
+    def printable(check: bool | BaseCheck, /) -> bool:
+        return should_print and (only_on is None or only_on == bool(check))
 
     if should_print:
         print('\n{\n\t' + '_'*20,
@@ -51,7 +51,7 @@ def make_assertions(
     if not all_different():
         failed_checks.append(all_different)
 
-    if printable(all_different()):
+    if printable(all_different):
         print(f'\t\t{all_different} ->',
               f'{F=}, {U=}, {R=}, {W=}, {T=}, {O=}', all_different)
 
