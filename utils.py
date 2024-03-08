@@ -90,14 +90,17 @@ def make_assertions(
             if should_print:
                 print('\n\t\t' + '_'*20, '\n W + W = U')
 
-            w_remainder = (2*W % 10) + x1 == U
-            all_true = all_true and w_remainder
+            w_remainder_inst = w_remainder(W=W, U=U, x1=x1)
+            all_true = all_true and w_remainder_inst()
 
-            if printable(w_remainder):
+            if not w_remainder_inst():
+                failed_checks.append(w_remainder_inst)
+
+            if printable(w_remainder_inst):
                 print(
-                    '\t\t(2*W % 10) + x1 == U ->',
+                    f'\t\t{w_remainder_inst} ->',
                     f'(2*{W} % 10) + {x1} == {U} -> {(2*W % 10) + x1} == {U}',
-                    w_remainder,
+                    w_remainder_inst(),
                 )
 
         if x2 is not None:
