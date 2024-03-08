@@ -123,25 +123,47 @@ def make_assertions(
             print('\n\t\t' + '_'*20, '\n T + T = FO')
 
         if O is not None:
-            t_remainder = (2*T % 10) + x2 == O
-            all_true = all_true and t_remainder
-            if printable(t_remainder):
-                print('\t\t(2*T % 10) + x2 == O ->',
-                      f'(2*{T} % 10) + {x2} == {O} -> {(2*T % 10) + x2} == {O}', t_remainder)
+            t_remainder_inst = t_remainder(T=T, O=O, x2=x2)
+            all_true = all_true and t_remainder_inst()
+
+            if not t_remainder_inst():
+                failed_checks.append(t_remainder_inst)
+
+            if printable(t_remainder_inst):
+                print(
+                    f'\t\t{t_remainder_inst} ->',
+                    f'(2*{T} % 10) + {x2} == {O} -> {(2*T % 10) + x2} == {O}',
+                    t_remainder_inst(),
+                )
 
         if x3 is not None:
-            t_div = (2*T + x2) // 10 == x3
-            all_true = all_true and t_div
-            if printable(t_div):
-                print('\t\t(2*T + x2) // 10 == x3 ->',
-                      f'(2*{T} + {x2}) // 10 == {x3} -> {(2*T + x2) // 10} == {x3}', (2*T + x2) // 10 == x3)
+            t_div_inst = t_div(T=T, x2=x2, x3=x3)
+            all_true = all_true and t_div_inst()
+
+            if not t_div_inst():
+                failed_checks.append(t_div_inst)
+
+            if printable(t_div_inst):
+                print(
+                    f'\t\t{t_div_inst} ->',
+                    f'(2*{T} + {x2}) // 10 == {x3} -> {(2*T + x2) // 10} == {x3}',
+                    t_div_inst(),
+                )
 
     if x3 is not None and\
             F is not None:
-        carry_check = F == x3
-        all_true = all_true and carry_check
-        if printable(carry_check):
-            print('\t\tF == x3 ->', f'{F} == {x3}', F == x3)
+        carry_check_inst = carry_check(F=F, x3=x3)
+        all_true = all_true and carry_check_inst()
+
+        if not carry_check_inst():
+            failed_checks.append(carry_check_inst)
+
+        if printable(carry_check_inst):
+            print(
+                f'\t\t{carry_check_inst} ->',
+                f'{F} == {x3}',
+                carry_check_inst(),
+            )
 
     if should_print:
         print('\n\t' + '_'*20, f'\t{all_true= }', '}', sep='\n')
