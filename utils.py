@@ -104,13 +104,17 @@ def make_assertions(
                 )
 
         if x2 is not None:
-            w_div = (2*W + x1) // 10 == x2
-            all_true = all_true and w_div
-            if printable(w_div):
+            w_div_inst = w_div(W=W, x1=x1, x2=x2)
+            all_true = all_true and w_div_inst()
+
+            if not w_div_inst():
+                failed_checks.append(w_div_inst)
+
+            if printable(w_div_inst):
                 print(
-                    '\t\t(2*W + x1) // 10 == x2 ->',
+                    f'\t\t{w_div_inst} ->',
                     f'(2*{W} + {x1}) // 10 == {x2} -> {(2*W + x1) // 10} == {x2}',
-                    w_div,
+                    w_div_inst(),
                 )
 
     if T is not None and\
