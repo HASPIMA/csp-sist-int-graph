@@ -2,6 +2,7 @@ from .alldiff import alldifferent
 from .o_check import o_div, o_remainder
 from .w_check import w_div, w_remainder
 from .fo_check import t_div, t_remainder, carry_check
+from .BaseCheck import BaseCheck
 
 # TODO: Rename this module to constraints
 
@@ -14,4 +15,5 @@ __all__ = [
     't_div',
     't_remainder',
     'carry_check',
+    'BaseCheck',
 ]
