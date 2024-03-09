@@ -3,6 +3,7 @@ from mermaid.flowchart.link import Link, LinkHead, LinkShape
 from mermaid.flowchart.node import Node
 
 from checks import BaseCheck
+from utils import make_assertions
 
 '''
 NOTE: This may be useful for the implementation of the flowchart
@@ -20,6 +21,33 @@ def generate_diagram() -> FlowChart:
     links: list[Link] = []
 
     error_nodes: dict[str, Node] = {}
+
+    for F in range(10):
+        F_id = f'.F_{F}'
+
+        # Create and append the F node
+        f_node = Node(F_id, content='F', shape='circle')
+        nodes.append(f_node)
+
+        f_valid, f_errors = make_assertions(F=F, should_print=False)
+        if f_valid:
+            # TODO: Keep traversing the search space
+            # TODO: Do an early return, no need to keep traversing the search space lol
+            pass
+        elif len(f_errors) > 0:
+            nodes, links, error_nodes = update_fail_states(
+                nodes,
+                links,
+                error_nodes,
+                F,
+                f_node,
+                f_errors,
+            )
+
+        else:
+            raise ValueError(
+                'This should not happen, F is not valid and has no errors'
+            )
 
     return FlowChart(title, nodes, links)
 
