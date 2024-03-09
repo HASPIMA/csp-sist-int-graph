@@ -17,4 +17,6 @@ def generate_diagram() -> FlowChart:
     nodes: list[Node] = []
     links: list[Link] = []
 
+    error_nodes: dict[str, Node] = {}
+
     return FlowChart(title, nodes, links)
