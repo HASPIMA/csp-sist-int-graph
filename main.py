@@ -1,6 +1,8 @@
-from mermaid.flowchart.node import Node, NODE_SHAPES
-from mermaid.flowchart.link import Link, LinkShape, LinkHead
 from mermaid.flowchart import FlowChart
+from mermaid.flowchart.link import Link, LinkHead, LinkShape
+from mermaid.flowchart.node import Node
+
+from checks import BaseCheck
 
 '''
 NOTE: This may be useful for the implementation of the flowchart
@@ -20,3 +22,49 @@ def generate_diagram() -> FlowChart:
     error_nodes: dict[str, Node] = {}
 
     return FlowChart(title, nodes, links)
+
+
+def update_fail_states(
+    nodes: list[Node],
+    links: list[Link],
+    error_nodes: dict[str, Node],
+    branch: int,
+    curr_node: Node,
+    failed_constraints: list[BaseCheck],
+) -> tuple[list[Node], list[Link], dict[str, Node]]:
+    curr_error: BaseCheck = failed_constraints[0]
+    curr_node_id = curr_node.id_
+
+    # Error node id is depth on the tree and a hash of the constraint type
+    h = hash(curr_error.check)
+    tmp_err_id = f'{curr_node_id[:-1]}.err_{h}'
+
+    #
+
+    error_node: Node
+
+    if tmp_err_id not in error_nodes:
+        error_nodes[tmp_err_id] = Node(
+            tmp_err_id,
+            content=str(curr_error),
+            shape='round-edge',
+        )
+
+        # Append the error node if it's the first time we've seen it
+        nodes.append(error_nodes[tmp_err_id])
+
+    error_node = error_nodes[tmp_err_id]
+
+    # Append the link to the error node from the F node
+    links.append(
+        Link(
+            curr_node,
+            error_node,
+            shape=LinkShape.NORMAL,
+            head_left=LinkHead.NONE,
+            head_right=LinkHead.ARROW,
+            message=str(branch),
+        )
+    )
+
+    return nodes, links, error_nodes
