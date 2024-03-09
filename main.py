@@ -96,3 +96,8 @@ def update_fail_states(
     )
 
     return nodes, links, error_nodes
+
+
+if __name__ == '__main__':
+    chart = generate_diagram()
+    chart.save()
