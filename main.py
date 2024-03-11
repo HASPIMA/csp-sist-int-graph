@@ -229,22 +229,70 @@ def generate_diagram() -> FlowChart:
                                                         )
 
                                                         if w_valid:
-                                                            # TODO: Keep traversing the search space
-                                                            # TODO: Do an early return, no need to keep traversing the search space lol
-                                                            nodes.append(
-                                                                valid_state
-                                                            )
-                                                            links.append(
-                                                                Link(
-                                                                    curr_node,
-                                                                    valid_state,
-                                                                    shape=LinkShape.NORMAL,
-                                                                    head_left=LinkHead.NONE,
-                                                                    head_right=LinkHead.ARROW,
-                                                                    message=str(
-                                                                        w),
+                                                            for t in range(10):
+                                                                parent_node = r_node
+                                                                t_id = f'{parent_node.id_}{r}.t_'
+                                                                id_so_far = t_id
+
+                                                                curr_node, nodes, node_ids = create_or_get_node(
+                                                                    nodes,
+                                                                    node_ids,
+                                                                    id_so_far,
                                                                 )
-                                                            )
+
+                                                                t_node = curr_node
+
+                                                                links, link_ids = update_links(
+                                                                    links=links,
+                                                                    link_ids=link_ids,
+                                                                    branch=t,
+                                                                    id_so_far=id_so_far,
+                                                                    parent_node=parent_node,
+                                                                    curr_node=curr_node,
+                                                                )
+
+                                                                t_valid, t_errors = make_assertions(
+                                                                    F=f,
+                                                                    x3=x3,
+                                                                    x2=x2,
+                                                                    x1=x1,
+                                                                    U=u,
+                                                                    R=r,
+                                                                    W=w,
+                                                                    T=t,
+                                                                    should_print=False,
+                                                                )
+
+                                                                if t_valid:
+                                                                    # TODO: Keep traversing the search space
+                                                                    # TODO: Do an early return, no need to keep traversing the search space lol
+                                                                    nodes.append(
+                                                                        valid_state
+                                                                    )
+                                                                    links.append(
+                                                                        Link(
+                                                                            curr_node,
+                                                                            valid_state,
+                                                                            shape=LinkShape.NORMAL,
+                                                                            head_left=LinkHead.NONE,
+                                                                            head_right=LinkHead.ARROW,
+                                                                            message=str(
+                                                                                t),
+                                                                        )
+                                                                    )
+                                                                elif len(t_errors) > 0:
+                                                                    nodes, links, error_nodes = update_fail_states(
+                                                                        nodes,
+                                                                        links,
+                                                                        error_nodes,
+                                                                        branch=t,
+                                                                        curr_node=curr_node,
+                                                                        failed_constraints=t_errors,
+                                                                    )
+                                                                else:
+                                                                    raise ValueError(
+                                                                        'This should not happen, t is not valid and has no errors'
+                                                                    )
                                                         elif len(w_errors) > 0:
                                                             nodes, links, error_nodes = update_fail_states(
                                                                 nodes,
