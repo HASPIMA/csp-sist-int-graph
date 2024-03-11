@@ -22,6 +22,8 @@ def generate_diagram() -> FlowChart:
 
     error_nodes: dict[str, Node] = {}
 
+    # FIXME: Fix nodes ids, links are repeated because they reference another node when it should be the same node
+
     for F in range(10):
         F_id = f'.F_{F}'
 
