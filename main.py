@@ -264,22 +264,76 @@ def generate_diagram() -> FlowChart:
                                                                 )
 
                                                                 if t_valid:
-                                                                    # TODO: Keep traversing the search space
-                                                                    # TODO: Do an early return, no need to keep traversing the search space lol
-                                                                    nodes.append(
-                                                                        valid_state
-                                                                    )
-                                                                    links.append(
-                                                                        Link(
-                                                                            curr_node,
-                                                                            valid_state,
-                                                                            shape=LinkShape.NORMAL,
-                                                                            head_left=LinkHead.NONE,
-                                                                            head_right=LinkHead.ARROW,
-                                                                            message=str(
-                                                                                t),
+                                                                    for o in range(10):
+                                                                        parent_node = t_node
+                                                                        o_id = f'{parent_node.id_}{t}.o_'
+                                                                        id_so_far = o_id
+
+                                                                        curr_node, nodes, node_ids = create_or_get_node(
+                                                                            nodes,
+                                                                            node_ids,
+                                                                            id_so_far,
                                                                         )
-                                                                    )
+
+                                                                        o_node = curr_node
+
+                                                                        links, link_ids = update_links(
+                                                                            links=links,
+                                                                            link_ids=link_ids,
+                                                                            branch=o,
+                                                                            id_so_far=id_so_far,
+                                                                            parent_node=parent_node,
+                                                                            curr_node=curr_node,
+                                                                        )
+
+                                                                        o_valid, o_errors = make_assertions(
+                                                                            F=f,
+                                                                            x3=x3,
+                                                                            x2=x2,
+                                                                            x1=x1,
+                                                                            U=u,
+                                                                            R=r,
+                                                                            W=w,
+                                                                            T=t,
+                                                                            O=o,
+                                                                            should_print=False,
+                                                                        )
+
+                                                                        if o_valid:
+                                                                            valid_state.content = f'Estado Válido\nF: {f}\nX3: {x3}\nX2: {x2}\nX1: {x1}\nU: {u}\nR: {r}\nW: {w}\nT: {t}\nO: {o}'
+                                                                            nodes.append(
+                                                                                valid_state
+                                                                            )
+                                                                            links.append(
+                                                                                Link(
+                                                                                    curr_node,
+                                                                                    valid_state,
+                                                                                    shape=LinkShape.NORMAL,
+                                                                                    head_left=LinkHead.NONE,
+                                                                                    head_right=LinkHead.ARROW,
+                                                                                    message=str(
+                                                                                        o),
+                                                                                )
+                                                                            )
+                                                                            return FlowChart(
+                                                                                title,
+                                                                                nodes,
+                                                                                links,
+                                                                                'LR',
+                                                                            )
+                                                                        elif len(o_errors) > 0:
+                                                                            nodes, links, error_nodes = update_fail_states(
+                                                                                nodes,
+                                                                                links,
+                                                                                error_nodes,
+                                                                                branch=o,
+                                                                                curr_node=curr_node,
+                                                                                failed_constraints=o_errors,
+                                                                            )
+                                                                        else:
+                                                                            raise ValueError(
+                                                                                'This should not happen, t is not valid and has no errors'
+                                                                            )
                                                                 elif len(t_errors) > 0:
                                                                     nodes, links, error_nodes = update_fail_states(
                                                                         nodes,
