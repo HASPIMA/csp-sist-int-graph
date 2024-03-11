@@ -27,7 +27,7 @@ def generate_diagram() -> FlowChart:
     valid_state = Node('valid', content='Valid State', shape='round-edge')
 
     for F in range(10):
-        F_id = f'.F_'
+        F_id = f'.f_'
         id_so_far = F_id
 
         # Create and append the F node
