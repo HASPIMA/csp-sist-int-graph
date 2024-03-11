@@ -4,9 +4,55 @@
   </head>
   <body>
     <pre class="mermaid">
-      flowchart LR
-        
-
+      flowchart TB
+      reg["`Se escojen aquellos con menos posibles valores.
+    Si hay más de una opción escojer las que tenga menos restricciones.
+    Si aún sigue habiendo más de una, escojer al azar.
+    
+    A continuación, se muestran las variables
+    con su número de restricciones:
+    
+    Variables con restricciones:
+    F: 2
+    T: 3
+    U: 2
+    W: 3
+    R: 2
+    O: 4
+    X1: 4
+    X2: 4
+    X3: 3`"]
+    
+      restr("`Restricciones:
+    
+    alldiff(F, T,U, W, R, O)
+    
+    2*O % 10 = R
+    2*O // 10 = x1
+    
+    (2*W % 10) + x1 = U
+    (2*W + x1) // 10 = x2
+    
+    (2*T % 10) + x2 = O
+    (2*T + x2) // 10 = x3
+    
+    F = x3
+    
+    x1,x2,x3 pertenecen a {0, 1}`")
+    
+      pasos("Se escoje la variable con menos posibles valores, en este caso F, con 2 posibles valores y dos	restricciones.
+    Luego se escoje x3 porque tiene dos valores posibles y tres restricciones (las otras opciones eran x2 o x1).
+    Luego se escoje x2 porque tiene dos valores posibles y tres restricciones (la otra opción era x1).
+    Luego se escoje x1 porque tiene dos valores posibles y tres restricciones.
+    Luego se escoje U porque tiene 10 valores posibles	y dos restricciones (la otra opción era R).
+    Luego se escoje R porque tiene 10 valores posibles	y dos restricciones.
+    Luego	se escoje W porque tiene 10 valores posibles y tres restricciones (las otras opción era T).
+    Luego se escoje T porque tiene 10 valores posibles y tres restricciones.
+    Luego se escoje O porque tiene 10 valores posibles y cuatro	restricciones (no hay más opciones)")
+    
+        restr --> reg & pasos
+        reg --> pasos
+    </pre>
     <pre class="mermaid">
       ---
 title: Constraint Satisfaction Problem
