@@ -1,5 +1,7 @@
 # Constraint Satisfaction Problem
 
+> Version 0.0.0
+
 This project was done to finish a homework I wasn't feeling like doing it
 with my bare hands and I decided to automate it. The problem is to solve a
 constraint satisfaction problem (CSP), basically you have to find a solution
