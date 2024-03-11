@@ -28,7 +28,7 @@ def generate_diagram() -> FlowChart:
 
     # FIXME: Tree looks wrong when rendered idky
 
-    for F in range(10):
+    for F in range(2):
         F_id = f'.f_'
         id_so_far: str = F_id
 
@@ -38,7 +38,7 @@ def generate_diagram() -> FlowChart:
 
         f_valid, f_errors = make_assertions(F=F, should_print=False)
         if f_valid:
-            for x3 in range(10):
+            for x3 in range(2):
                 parent_node: Node
                 curr_node: Node
 
