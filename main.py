@@ -53,8 +53,8 @@ def generate_diagram() -> FlowChart:
                 if id_so_far not in link_ids:
                     link_ids.add(id_so_far)
                     link = Link(
-                        f_node,
-                        x3_node,
+                        parent_node,
+                        curr_node,
                         shape=LinkShape.NORMAL,
                         head_left=LinkHead.NONE,
                         head_right=LinkHead.ARROW,
@@ -77,7 +77,7 @@ def generate_diagram() -> FlowChart:
                     nodes.append(valid_state)
                     links.append(
                         Link(
-                            x3_node,
+                            curr_node,
                             valid_state,
                             shape=LinkShape.NORMAL,
                             head_left=LinkHead.NONE,
@@ -91,7 +91,7 @@ def generate_diagram() -> FlowChart:
                         links,
                         error_nodes,
                         branch=x3,
-                        curr_node=x3_node,
+                        curr_node=curr_node,
                         failed_constraints=x3_errors,
                     )
                 else:
