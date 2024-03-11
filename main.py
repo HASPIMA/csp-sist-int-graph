@@ -39,18 +39,20 @@ def generate_diagram() -> FlowChart:
         f_valid, f_errors = make_assertions(F=F, should_print=False)
         if f_valid:
             for x3 in range(10):
-                x3_id = f'{id_so_far}{F}.x3_'
-                id_so_far = x3_id
-
                 parent_node: Node
                 curr_node: Node
 
                 parent_node = f_node
+                x3_id = f'{parent_node.id_}{F}.x3_'
+                id_so_far = x3_id
+
                 curr_node, nodes, node_ids = create_or_get_node(
                     nodes,
                     node_ids,
                     id_so_far,
                 )
+
+                x3_node = curr_node
 
                 links, link_ids = update_links(
                     links=links,
