@@ -135,8 +135,6 @@ def update_fail_states(
     h = hash(curr_error.check)
     tmp_err_id = f'{curr_node_id[:-1]}.err_{h}'
 
-    #
-
     error_node: Node
 
     if tmp_err_id not in error_nodes:
