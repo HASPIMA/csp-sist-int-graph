@@ -140,19 +140,19 @@ def update_links(
 def create_or_get_node(
     nodes: list[Node],
     node_ids: set[str],
-    id_so_far: str,
+    node_id: str,
 ) -> tuple[Node, list[Node], set[str]]:
     curr_node: Node
 
     # Create and append the x3 node
-    if id_so_far not in node_ids:
-        node_ids.add(id_so_far)
-        curr_node = Node(id_so_far, content='x3', shape='circle')
+    if node_id not in node_ids:
+        node_ids.add(node_id)
+        curr_node = Node(node_id, content='x3', shape='circle')
         nodes.insert(0, curr_node)
     else:
         # NOTE: This works because I modified the internal of `Node`, BE WEARY OF THIS
         # Basically I removed the conversion to snake case of the id_
-        curr_node, *_ = [node for node in nodes if node.id_ == id_so_far]
+        curr_node, *_ = [node for node in nodes if node.id_ == node_id]
 
     return curr_node, nodes, node_ids
 
