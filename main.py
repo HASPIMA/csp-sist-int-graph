@@ -148,7 +148,7 @@ def generate_diagram() -> FlowChart:
                                         nodes,
                                         links,
                                         error_nodes,
-                                        branch=x3,
+                                        branch=x1,
                                         curr_node=curr_node,
                                         failed_constraints=x1_errors,
                                     )
@@ -161,7 +161,7 @@ def generate_diagram() -> FlowChart:
                                 nodes,
                                 links,
                                 error_nodes,
-                                branch=x3,
+                                branch=x2,
                                 curr_node=curr_node,
                                 failed_constraints=x2_errors,
                             )
