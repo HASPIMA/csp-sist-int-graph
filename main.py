@@ -256,7 +256,7 @@ def generate_diagram() -> FlowChart:
                                                             )
                                                         else:
                                                             raise ValueError(
-                                                                'This should not happen, x1 is not valid and has no errors'
+                                                                'This should not happen, w is not valid and has no errors'
                                                             )
                                                 elif len(r_errors) > 0:
                                                     nodes, links, error_nodes = update_fail_states(
@@ -269,7 +269,7 @@ def generate_diagram() -> FlowChart:
                                                     )
                                                 else:
                                                     raise ValueError(
-                                                        'This should not happen, x1 is not valid and has no errors'
+                                                        'This should not happen, r is not valid and has no errors'
                                                     )
                                         elif len(u_errors) > 0:
                                             nodes, links, error_nodes = update_fail_states(
