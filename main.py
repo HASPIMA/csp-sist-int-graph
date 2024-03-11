@@ -53,6 +53,9 @@ def generate_diagram() -> FlowChart:
                     x3_node, \
                         *_ = [node for node in nodes if node.id_ == id_so_far]
 
+                parent_node: Node
+                curr_node: Node
+
                 if id_so_far not in link_ids:
                     link_ids.add(id_so_far)
                     link = Link(
