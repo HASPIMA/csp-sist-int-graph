@@ -50,21 +50,14 @@ def generate_diagram() -> FlowChart:
                     id_so_far,
                 )
 
-                if id_so_far not in link_ids:
-                    link_ids.add(id_so_far)
-                    link = Link(
-                        parent_node,
-                        curr_node,
-                        shape=LinkShape.NORMAL,
-                        head_left=LinkHead.NONE,
-                        head_right=LinkHead.ARROW,
-                        message=str(F),
-                    )
-
-                    links.insert(
-                        0,
-                        link
-                    )
+                links, link_ids = update_links(
+                    links=links,
+                    link_ids=link_ids,
+                    branch=F,
+                    id_so_far=id_so_far,
+                    parent_node=parent_node,
+                    curr_node=curr_node,
+                )
 
                 x3_valid, x3_errors = make_assertions(
                     F=F,
@@ -115,6 +108,33 @@ def generate_diagram() -> FlowChart:
             )
 
     return FlowChart(title, nodes, links)
+
+
+def update_links(
+    links: list[Link],
+    link_ids: set[str],
+    branch: int,
+    id_so_far: str,
+    parent_node: Node,
+    curr_node: Node,
+) -> tuple[list[Link], set[str]]:
+    if id_so_far not in link_ids:
+        link_ids.add(id_so_far)
+        link = Link(
+            parent_node,
+            curr_node,
+            shape=LinkShape.NORMAL,
+            head_left=LinkHead.NONE,
+            head_right=LinkHead.ARROW,
+            message=str(branch),
+        )
+
+        links.insert(
+            0,
+            link,
+        )
+
+    return links, link_ids
 
 
 def create_or_get_node(
