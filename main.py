@@ -28,7 +28,7 @@ def generate_diagram() -> FlowChart:
 
     # FIXME: Tree looks wrong when rendered idky
 
-    for F in range(2):
+    for f in range(2):
         F_id = f'.f_'
         id_so_far: str = F_id
 
@@ -36,14 +36,14 @@ def generate_diagram() -> FlowChart:
         f_node = Node(F_id, content='F', shape='circle')
         nodes.append(f_node)
 
-        f_valid, f_errors = make_assertions(F=F, should_print=False)
+        f_valid, f_errors = make_assertions(F=f, should_print=False)
         if f_valid:
             for x3 in range(2):
                 parent_node: Node
                 curr_node: Node
 
                 parent_node = f_node
-                x3_id = f'{parent_node.id_}{F}.x3_'
+                x3_id = f'{parent_node.id_}{f}.x3_'
                 id_so_far = x3_id
 
                 curr_node, nodes, node_ids = create_or_get_node(
@@ -57,14 +57,14 @@ def generate_diagram() -> FlowChart:
                 links, link_ids = update_links(
                     links=links,
                     link_ids=link_ids,
-                    branch=F,
+                    branch=f,
                     id_so_far=id_so_far,
                     parent_node=parent_node,
                     curr_node=curr_node,
                 )
 
                 x3_valid, x3_errors = make_assertions(
-                    F=F,
+                    F=f,
                     x3=x3,
                     should_print=False,
                 )
@@ -92,7 +92,7 @@ def generate_diagram() -> FlowChart:
                         )
 
                         x2_valid, x2_errors = make_assertions(
-                            F=F,
+                            F=f,
                             x3=x3,
                             x2=x2,
                             should_print=False,
@@ -144,7 +144,7 @@ def generate_diagram() -> FlowChart:
                 nodes,
                 links,
                 error_nodes,
-                F,
+                f,
                 f_node,
                 f_errors,
             )
