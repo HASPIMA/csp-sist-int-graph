@@ -40,21 +40,15 @@ def generate_diagram() -> FlowChart:
                 x3_id = f'{id_so_far}{F}.x3_'
                 id_so_far = x3_id
 
-                x3_node: Node
-
-                # Create and append the x3 node
-                if id_so_far not in node_ids:
-                    node_ids.add(id_so_far)
-                    x3_node = Node(id_so_far, content='x3', shape='circle')
-                    nodes.insert(0, x3_node)
-                else:
-                    # NOTE: This works because I modified the internal of `Node`, BE WEARY OF THIS
-                    # Basically I removed the conversion to snake case of the id_
-                    x3_node, \
-                        *_ = [node for node in nodes if node.id_ == id_so_far]
-
                 parent_node: Node
                 curr_node: Node
+
+                parent_node = f_node
+                curr_node, nodes, node_ids = create_or_get_node(
+                    nodes,
+                    node_ids,
+                    id_so_far,
+                )
 
                 if id_so_far not in link_ids:
                     link_ids.add(id_so_far)
@@ -121,6 +115,26 @@ def generate_diagram() -> FlowChart:
             )
 
     return FlowChart(title, nodes, links)
+
+
+def create_or_get_node(
+        nodes: list[Node],
+        node_ids: set[str],
+        id_so_far: str,
+) -> tuple[Node, list[Node], set[str]]:
+    curr_node: Node
+
+    # Create and append the x3 node
+    if id_so_far not in node_ids:
+        node_ids.add(id_so_far)
+        curr_node = Node(id_so_far, content='x3', shape='circle')
+        nodes.insert(0, curr_node)
+    else:
+        # NOTE: This works because I modified the internal of `Node`, BE WEARY OF THIS
+        # Basically I removed the conversion to snake case of the id_
+        curr_node, *_ = [node for node in nodes if node.id_ == id_so_far]
+
+    return curr_node, nodes, node_ids
 
 
 def update_fail_states(
