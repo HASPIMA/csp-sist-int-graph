@@ -26,9 +26,11 @@ def generate_diagram() -> FlowChart:
 
     valid_state = Node('valid', content='Valid State', shape='round-edge')
 
+    # FIXME: Tree looks wrong when rendered idky
+
     for F in range(10):
         F_id = f'.f_'
-        id_so_far = F_id
+        id_so_far: str = F_id
 
         # Create and append the F node
         f_node = Node(F_id, content='F', shape='circle')
