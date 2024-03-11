@@ -211,7 +211,7 @@ def generate_diagram() -> FlowChart:
                                                         links, link_ids = update_links(
                                                             links=links,
                                                             link_ids=link_ids,
-                                                            branch=w,
+                                                            branch=r,
                                                             id_so_far=id_so_far,
                                                             parent_node=parent_node,
                                                             curr_node=curr_node,
@@ -230,7 +230,7 @@ def generate_diagram() -> FlowChart:
 
                                                         if w_valid:
                                                             for t in range(10):
-                                                                parent_node = r_node
+                                                                parent_node = w_node
                                                                 t_id = f'{parent_node.id_}{r}.t_'
                                                                 id_so_far = t_id
 
@@ -245,7 +245,7 @@ def generate_diagram() -> FlowChart:
                                                                 links, link_ids = update_links(
                                                                     links=links,
                                                                     link_ids=link_ids,
-                                                                    branch=t,
+                                                                    branch=w,
                                                                     id_so_far=id_so_far,
                                                                     parent_node=parent_node,
                                                                     curr_node=curr_node,
@@ -280,7 +280,7 @@ def generate_diagram() -> FlowChart:
                                                                         links, link_ids = update_links(
                                                                             links=links,
                                                                             link_ids=link_ids,
-                                                                            branch=o,
+                                                                            branch=t,
                                                                             id_so_far=id_so_far,
                                                                             parent_node=parent_node,
                                                                             curr_node=curr_node,
@@ -300,7 +300,7 @@ def generate_diagram() -> FlowChart:
                                                                         )
 
                                                                         if o_valid:
-                                                                            valid_state.content = f'Estado Válido\nF: {f}\nX3: {x3}\nX2: {x2}\nX1: {x1}\nU: {u}\nR: {r}\nW: {w}\nT: {t}\nO: {o}'
+                                                                            valid_state.content = f'Estado correcto:\nF: {f}\nX3: {x3}\nX2: {x2}\nX1: {x1}\nU: {u}\nR: {r}\nW: {w}\nT: {t}\nO: {o}'
                                                                             nodes.append(
                                                                                 valid_state
                                                                             )
