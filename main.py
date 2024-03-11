@@ -118,9 +118,9 @@ def generate_diagram() -> FlowChart:
 
 
 def create_or_get_node(
-        nodes: list[Node],
-        node_ids: set[str],
-        id_so_far: str,
+    nodes: list[Node],
+    node_ids: set[str],
+    id_so_far: str,
 ) -> tuple[Node, list[Node], set[str]]:
     curr_node: Node
 
