@@ -99,19 +99,63 @@ def generate_diagram() -> FlowChart:
                         )
 
                         if x2_valid:
-                            # TODO: Keep traversing the search space
-                            # TODO: Do an early return, no need to keep traversing the search space lol
-                            nodes.append(valid_state)
-                            links.append(
-                                Link(
-                                    curr_node,
-                                    valid_state,
-                                    shape=LinkShape.NORMAL,
-                                    head_left=LinkHead.NONE,
-                                    head_right=LinkHead.ARROW,
-                                    message=str(x2),
+                            for x1 in range(2):
+                                parent_node = x2_node
+                                x1_id = f'{parent_node.id_}{x2}.x1_'
+                                id_so_far = x1_id
+
+                                curr_node, nodes, node_ids = create_or_get_node(
+                                    nodes,
+                                    node_ids,
+                                    id_so_far,
                                 )
-                            )
+
+                                x1_node = curr_node
+
+                                links, link_ids = update_links(
+                                    links=links,
+                                    link_ids=link_ids,
+                                    branch=x2,
+                                    id_so_far=id_so_far,
+                                    parent_node=parent_node,
+                                    curr_node=curr_node,
+                                )
+
+                                x1_valid, x1_errors = make_assertions(
+                                    F=f,
+                                    x3=x3,
+                                    x2=x2,
+                                    x1=x1,
+                                    should_print=False,
+                                )
+
+                                if x1_valid:
+                                    # TODO: Keep traversing the search space
+                                    # TODO: Do an early return, no need to keep traversing the search space lol
+                                    nodes.append(valid_state)
+                                    links.append(
+                                        Link(
+                                            curr_node,
+                                            valid_state,
+                                            shape=LinkShape.NORMAL,
+                                            head_left=LinkHead.NONE,
+                                            head_right=LinkHead.ARROW,
+                                            message=str(x1),
+                                        )
+                                    )
+                                elif len(x1_errors) > 0:
+                                    nodes, links, error_nodes = update_fail_states(
+                                        nodes,
+                                        links,
+                                        error_nodes,
+                                        branch=x3,
+                                        curr_node=curr_node,
+                                        failed_constraints=x1_errors,
+                                    )
+                                else:
+                                    raise ValueError(
+                                        'This should not happen, x1 is not valid and has no errors'
+                                    )
                         elif len(x2_errors) > 0:
                             nodes, links, error_nodes = update_fail_states(
                                 nodes,
