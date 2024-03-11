@@ -144,10 +144,13 @@ def create_or_get_node(
 ) -> tuple[Node, list[Node], set[str]]:
     curr_node: Node
 
+    # Get the last variable and ignore its branch value
+    content: str = node_id.split('.')[-1].split('_')[0]
+
     # Create and append the x3 node
     if node_id not in node_ids:
         node_ids.add(node_id)
-        curr_node = Node(node_id, content='x3', shape='circle')
+        curr_node = Node(node_id, content=content, shape='circle')
         nodes.insert(0, curr_node)
     else:
         # NOTE: This works because I modified the internal of `Node`, BE WEARY OF THIS
