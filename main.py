@@ -19,12 +19,12 @@ def generate_diagram() -> FlowChart:
     title: str = 'Constraint Satisfaction Problem'
     nodes: list[Node] = []
     links: list[Link] = []
+    link_ids: set[str] = set()
+    node_ids: set[str] = set()
 
     error_nodes: dict[str, Node] = {}
 
     valid_state = Node('valid', content='Valid State', shape='round-edge')
-
-    # FIXME: Fix nodes ids, links are repeated because they reference another node when it should be the same node
 
     for F in range(10):
         F_id = f'.F_'
@@ -36,19 +36,72 @@ def generate_diagram() -> FlowChart:
 
         f_valid, f_errors = make_assertions(F=F, should_print=False)
         if f_valid:
-            # TODO: Keep traversing the search space
-            # TODO: Do an early return, no need to keep traversing the search space lol
-            nodes.append(valid_state)
-            links.append(
-                Link(
-                    F_node,
-                    valid_state,
-                    shape=LinkShape.NORMAL,
-                    head_left=LinkHead.NONE,
-                    head_right=LinkHead.ARROW,
-                    message=str(F),
+            for x3 in range(10):
+                x3_id = f'{id_so_far}{F}.x3_'
+                id_so_far = x3_id
+
+                x3_node: Node
+
+                # Create and append the x3 node
+                if id_so_far not in node_ids:
+                    node_ids.add(id_so_far)
+                    x3_node = Node(id_so_far, content='x3', shape='circle')
+                    nodes.insert(0, x3_node)
+                else:
+                    # NOTE: This works because I modified the internal of `Node`, BE WEARY OF THIS
+                    # Basically I removed the conversion to snake case of the id_
+                    x3_node, \
+                        *_ = [node for node in nodes if node.id_ == id_so_far]
+
+                if id_so_far not in link_ids:
+                    link_ids.add(id_so_far)
+                    link = Link(
+                        f_node,
+                        x3_node,
+                        shape=LinkShape.NORMAL,
+                        head_left=LinkHead.NONE,
+                        head_right=LinkHead.ARROW,
+                        message=str(F),
+                    )
+
+                    links.insert(
+                        0,
+                        link
+                    )
+
+                x3_valid, x3_errors = make_assertions(
+                    F=F,
+                    x3=x3,
+                    should_print=False,
                 )
-            )
+                if x3_valid:
+                    # TODO: Keep traversing the search space
+                    # TODO: Do an early return, no need to keep traversing the search space lol
+                    nodes.append(valid_state)
+                    links.append(
+                        Link(
+                            x3_node,
+                            valid_state,
+                            shape=LinkShape.NORMAL,
+                            head_left=LinkHead.NONE,
+                            head_right=LinkHead.ARROW,
+                            message=str(x3),
+                        )
+                    )
+                elif len(x3_errors) > 0:
+                    nodes, links, error_nodes = update_fail_states(
+                        nodes,
+                        links,
+                        error_nodes,
+                        branch=x3,
+                        curr_node=x3_node,
+                        failed_constraints=x3_errors,
+                    )
+                else:
+                    raise ValueError(
+                        'This should not happen, x3 is not valid and has no errors'
+                    )
+
         elif len(f_errors) > 0:
             nodes, links, error_nodes = update_fail_states(
                 nodes,
