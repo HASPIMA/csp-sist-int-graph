@@ -20,7 +20,7 @@ def solve_almost_all(*, x1: int, x2: int, x3: int):
                 for W in range(10):
                     for T in range(10):
                         for O in range(10):
-                            if make_assertions(F=F, U=U, R=R, W=W, T=T, O=O, x1=x1, x2=x2, x3=x3, should_print=False):
+                            if make_assertions(F=F, U=U, R=R, W=W, T=T, O=O, x1=x1, x2=x2, x3=x3, should_print=False)[0]:
                                 print('++'*20,
                                       f'\n{F=}, {x3=}, {x2=}, {x1=}, {U=}, {R=}, {W=}, {T=}, {O=}')
                                 make_assertions(
@@ -31,33 +31,33 @@ def solve_almost_all(*, x1: int, x2: int, x3: int):
 def find_first_solution():
     nodes_visited = 0
     for U in range(10):
-        if make_assertions(U=U, should_print=False):
+        if make_assertions(U=U, should_print=False)[0]:
             nodes_visited += 1
             for R in range(10):
-                if make_assertions(U=U, R=R, should_print=False):
+                if make_assertions(U=U, R=R, should_print=False)[0]:
                     nodes_visited += 1
                     for F in range(10):
-                        if make_assertions(U=U, R=R, F=F, should_print=False):
+                        if make_assertions(U=U, R=R, F=F, should_print=False)[0]:
                             nodes_visited += 1
                             for W in range(10):
-                                if make_assertions(U=U, R=R, F=F, W=W, should_print=False):
+                                if make_assertions(U=U, R=R, F=F, W=W, should_print=False)[0]:
                                     nodes_visited += 1
                                     for T in range(10):
-                                        if make_assertions(U=U, R=R, F=F, W=W, T=T, should_print=False):
+                                        if make_assertions(U=U, R=R, F=F, W=W, T=T, should_print=False)[0]:
                                             nodes_visited += 1
                                             for x1 in range(10):  # could be just 0,1
-                                                if make_assertions(U=U, R=R, F=F, W=W, T=T, x1=x1, should_print=False):
+                                                if make_assertions(U=U, R=R, F=F, W=W, T=T, x1=x1, should_print=False)[0]:
                                                     nodes_visited += 1
                                                     # could be just 0,1
                                                     for x3 in range(10):
-                                                        if make_assertions(U=U, R=R, F=F, W=W, T=T, x1=x1, x3=x3, should_print=False):
+                                                        if make_assertions(U=U, R=R, F=F, W=W, T=T, x1=x1, x3=x3, should_print=False)[0]:
                                                             nodes_visited += 1
                                                             for O in range(10):
-                                                                if make_assertions(U=U, R=R, F=F, W=W, T=T, x1=x1, x3=x3, O=O, should_print=False):
+                                                                if make_assertions(U=U, R=R, F=F, W=W, T=T, x1=x1, x3=x3, O=O, should_print=False)[0]:
                                                                     nodes_visited += 1
                                                                     # could be just 0,1
                                                                     for x2 in range(10):
-                                                                        if make_assertions(U=U, R=R, F=F, W=W, T=T, x1=x1, x3=x3, O=O, x2=x2, should_print=False):
+                                                                        if make_assertions(U=U, R=R, F=F, W=W, T=T, x1=x1, x3=x3, O=O, x2=x2, should_print=False)[0]:
                                                                             nodes_visited += 1
                                                                             print('++'*20,
                                                                                   f'\n{F=}, {x3=}, {x2=}, {x1=}, {U=}, {R=}, {W=}, {T=}, {O=}')
@@ -97,33 +97,33 @@ def find_first_solution():
 def find_less_val_less_restr() -> dict[str, int] | None:
     nodes_visited = 0
     for F in range(10):
-        if make_assertions(F=F, should_print=False):
+        if make_assertions(F=F, should_print=False)[0]:
             nodes_visited += 1
             for x3 in range(10):
-                if make_assertions(F=F, x3=x3, should_print=False):
+                if make_assertions(F=F, x3=x3, should_print=False)[0]:
                     nodes_visited += 1
                     for x2 in range(10):
-                        if make_assertions(F=F, x3=x3, x2=x2, should_print=False):
+                        if make_assertions(F=F, x3=x3, x2=x2, should_print=False)[0]:
                             nodes_visited += 1
                             for x1 in range(10):
-                                if make_assertions(F=F, x3=x3, x2=x2, x1=x1, should_print=False):
+                                if make_assertions(F=F, x3=x3, x2=x2, x1=x1, should_print=False)[0]:
                                     nodes_visited += 1
                                     for U in range(10):
-                                        if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, should_print=False):
+                                        if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, should_print=False)[0]:
                                             nodes_visited += 1
                                             for R in range(10):  # could be just 0,1
-                                                if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, R=R, should_print=False):
+                                                if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, R=R, should_print=False)[0]:
                                                     nodes_visited += 1
                                                     # could be just 0,1
                                                     for W in range(10):
-                                                        if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, R=R, W=W, should_print=False):
+                                                        if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, R=R, W=W, should_print=False)[0]:
                                                             nodes_visited += 1
                                                             for T in range(10):
-                                                                if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, R=R, W=W, T=T, should_print=False):
+                                                                if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, R=R, W=W, T=T, should_print=False)[0]:
                                                                     nodes_visited += 1
                                                                     # could be just 0,1
                                                                     for O in range(10):
-                                                                        if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, R=R, W=W, T=T, O=O, should_print=False):
+                                                                        if make_assertions(F=F, x3=x3, x2=x2, x1=x1, U=U, R=R, W=W, T=T, O=O, should_print=False)[0]:
                                                                             nodes_visited += 1
                                                                             print('++'*20,
                                                                                   f'\n{F=}, {x3=}, {x2=}, {x1=}, {U=}, {R=}, {W=}, {T=}, {O=}')
@@ -174,16 +174,16 @@ def partial_solve(
     solutions: list[dict[str, int]] = []
     iterations = 0
     for R in range(10):
-        if make_assertions(F=F, U=U, R=R, x1=x1, x2=x2, x3=x3, only_on=only_on):
+        if make_assertions(F=F, U=U, R=R, x1=x1, x2=x2, x3=x3, only_on=only_on)[0]:
             iterations += 1
             for W in range(10):
-                if make_assertions(F=F, U=U, R=R, W=W, x1=x1, x2=x2, x3=x3, only_on=only_on):
+                if make_assertions(F=F, U=U, R=R, W=W, x1=x1, x2=x2, x3=x3, only_on=only_on)[0]:
                     iterations += 1
                     for T in range(10):
-                        if make_assertions(F=F, U=U, R=R, W=W, T=T, x1=x1, x2=x2, x3=x3, only_on=only_on):
+                        if make_assertions(F=F, U=U, R=R, W=W, T=T, x1=x1, x2=x2, x3=x3, only_on=only_on)[0]:
                             iterations += 1
                             for O in range(10):
-                                if make_assertions(F=F, U=U, R=R, W=W, T=T, O=O, x1=x1, x2=x2, x3=x3, only_on=only_on):
+                                if make_assertions(F=F, U=U, R=R, W=W, T=T, O=O, x1=x1, x2=x2, x3=x3, only_on=only_on)[0]:
                                     iterations += 1
                                     solutions.append({
                                         'F': F,
