@@ -22,10 +22,13 @@ def generate_diagram() -> FlowChart:
 
     error_nodes: dict[str, Node] = {}
 
+    valid_state = Node('valid', content='Valid State', shape='round-edge')
+
     # FIXME: Fix nodes ids, links are repeated because they reference another node when it should be the same node
 
     for F in range(10):
-        F_id = f'.F_{F}'
+        F_id = f'.F_'
+        id_so_far = F_id
 
         # Create and append the F node
         f_node = Node(F_id, content='F', shape='circle')
@@ -35,7 +38,17 @@ def generate_diagram() -> FlowChart:
         if f_valid:
             # TODO: Keep traversing the search space
             # TODO: Do an early return, no need to keep traversing the search space lol
-            pass
+            nodes.append(valid_state)
+            links.append(
+                Link(
+                    F_node,
+                    valid_state,
+                    shape=LinkShape.NORMAL,
+                    head_left=LinkHead.NONE,
+                    head_right=LinkHead.ARROW,
+                    message=str(F),
+                )
+            )
         elif len(f_errors) > 0:
             nodes, links, error_nodes = update_fail_states(
                 nodes,
